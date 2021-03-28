@@ -1,6 +1,12 @@
 package com.telkom.finalproject.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.telkom.finalproject.model.AdminUserModel;
@@ -12,7 +18,7 @@ import com.telkom.finalproject.utils.ResponseCode;
 import com.telkom.finalproject.utils.ResponseMessage;
 
 @Service
-public class AuthService {
+public class AuthService implements UserDetailsService{
 	@Autowired
 	private PeopleRepository peopleRepository;
 	
@@ -46,7 +52,7 @@ public class AuthService {
 		Response<AdminUserModel> response = new Response<>();
 		
 		AdminUserModel currentUser = adminUserRepository.getByUsername(username);
-		System.out.println(currentUser);
+		
 		boolean loginSuccess = currentUser != null ? currentUser.getPassword().equals(password) : false;
 
 		if(loginSuccess) {
@@ -58,5 +64,16 @@ public class AuthService {
 			response.setMessage(ResponseMessage.LOGIN_FAILED);
 		}
 		return response;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String hp) throws UsernameNotFoundException {
+		System.out.println("masukkkk");
+		PeopleModel peopleModel = peopleRepository.getByHp(hp);
+		if(peopleModel != null) {
+			return new User(peopleModel.getHp(), peopleModel.getPassword(), new ArrayList<>());
+		}else {
+			throw new UsernameNotFoundException("User not found");
+		}
 	}
 }

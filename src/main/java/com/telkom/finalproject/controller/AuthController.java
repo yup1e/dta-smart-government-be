@@ -19,7 +19,7 @@ public class AuthController {
 	private AuthService authService;
 	
 	
-	@PostMapping("/auth/login")
+	@PostMapping("/login")
 	public Response<PeopleModel> login(@RequestParam("hp") String hp, @RequestParam("password") String password) {
 		return authService.login(hp, password);
 	}
