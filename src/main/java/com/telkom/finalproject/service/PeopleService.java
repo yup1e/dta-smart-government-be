@@ -1,5 +1,7 @@
 package com.telkom.finalproject.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,9 @@ public class PeopleService {
 	}
 	
 	public PeopleModel createPeople(PeopleModel peopleModel) {
-		peopleModel.setPassword(bCryptPasswordEncoder.encode(peopleModel.getPassword()));
-		return peopleRepository.save(peopleModel);
+		 LocalDateTime now = LocalDateTime.now();
+		 peopleModel.setDateRegister(now);
+		 peopleModel.setPassword(bCryptPasswordEncoder.encode(peopleModel.getPassword()));
+		 return peopleRepository.save(peopleModel);
 	}
 }
