@@ -1,5 +1,6 @@
 package com.telkom.finalproject.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class PeopleModel {
 	private boolean isAgree; 
 	
 	@Column(name = "date_register")
-	private Date dateRegister; 
+	private LocalDateTime dateRegister; 
 	
 	
 	public int getPeopleId() {
@@ -95,11 +96,11 @@ public class PeopleModel {
 		this.isAgree = isAgree;
 	}
 
-	public Date getDateRegister() {
+	public LocalDateTime getDateRegister() {
 		return dateRegister;
 	}
 
-	public void setDateRegister(Date dateRegister) {
+	public void setDateRegister(LocalDateTime dateRegister) {
 		this.dateRegister = dateRegister;
 	}
 }
